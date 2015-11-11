@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Reglas del Juego</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="Interfaz.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+
+        
+
+        var nrImg = 7;  //numero de imagenes 
+        var IntSeconds = 15;     //segundos para pasar de imagen
+
+        function Load()
+        {
+            nrShown = 0;    //imagen visible
+            Vect = new Array(nrImg + 10);
+            Vect[0] = document.getElementById("Img1");
+            Vect[0].style.visibility = "visible";
+            document.getElementById("S" + 0).style.visibility = "visible";
+            for (var i = 1; i < nrImg; i++)
+            {
+                Vect[i] = document.getElementById("Img" + (i + 1));
+                document.getElementById("S" + i).style.visibility = "visible";
+            }
+
+            document.getElementById("S" + 0).style.backgroundColor = "rgba(255, 255, 255, 0.90)";
+            document.getElementById("SP" + nrShown).style.visibility = "visible";
+            mytime = setInterval(Timer, IntSeconds * 1000);
+        }
+        //funcion para el lapso de tiempo
+        function Timer()
+        {
+            nrShown++;
+            if (nrShown === nrImg)
+                nrShown = 0;
+            Effect();
+        }
+        //funcion para pasar de imagen
+        function next()
+        {
+            nrShown++;
+            if (nrShown === nrImg)
+                nrShown = 0;
+            Effect();
+
+            clearInterval(mytime);
+            mytime = setInterval(Timer, IntSeconds * 1000);
+        }
+        //funcion para regresar a la imagen anterior
+        function prev()
+        {
+            nrShown--;
+            if (nrShown === -1)
+                nrShown = nrImg -1;
+            Effect();
+
+            clearInterval(mytime);
+            mytime = setInterval(Timer, IntSeconds * 1000);
+        }
+        //funcion que cambia la imagen
+        function Effect()
+        {
+            for (var i = 0; i < nrImg; i++)
+            {
+                Vect[i].style.opacity = "0";   //añade el efecto 
+                Vect[i].style.visibility = "hidden";
+
+                document.getElementById("S" + i).style.backgroundColor = "rgba(0, 0, 0, 0.70)";
+                document.getElementById("SP" + i).style.visibility = "hidden";
+            }
+            Vect[nrShown].style.opacity = "1";
+            Vect[nrShown].style.visibility = "visible";
+            document.getElementById("S" + nrShown).style.backgroundColor = "rgba(255, 255, 255, 0.90)";
+            document.getElementById("SP" + nrShown).style.visibility = "visible";
+        }
+
+    </script>
+</head>
+<body style="background-color: silver" onload="Load()">
+          <nav id="menu">
+            <ul>
+                <li> <a href="index.html" title="Regresar a Inicio">Inicio</a> </li>
+                <li> <a href="Rummikub.html" title="Iniciar una partida">Jugar</a> </li>
+                <li> <a href="Reglas.html" title="Reglas del Juego">Reglas</a> </li>
+                <li> <a href="Creditos.html" title="Créditos">Créditos</a> </li>
+            </ul>
+        </nav>
+    <div id="slider">
+        <div id="imgs">
+            <!-- Etiquetas de imagenes -->
+            <img id="Img1" src="Imagenes/regla1.png"/>
+            <img id="Img2" src="Imagenes/regla2.png"/>
+            <img id="Img3" src="Imagenes/regla3.png"/>
+            <img id="Img4" src="Imagenes/regla4.png"/>
+            <img id="Img5" src="Imagenes/regla5.png"/>
+            <img id="Img6" src="Imagenes/regla6.png"/>
+            <img id="Img7" src="Imagenes/regla7.png"/>
+        </div>
+        <!--Botones izquierda y derecha, info y punto siguiente-->
+        <div id="Snav">
+            <!-- Punto de imagen actual -->
+            <div id="SnavUp">
+                <div id="Scircles">
+                    <ul>
+                        <!-- Secuencia de puntos -->
+                        <li id="S0"></li>
+                        <li id="S1"></li>
+                        <li id="S2"></li>
+                        <li id="S3"></li>
+                        <li id="S4"></li>
+                        <li id="S5"></li>
+                        <li id="S6"></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Boton derecha y izquierda -->
+            <div id="SnavMiddle">
+                <img id="Sleft" src="Imagenes/izq.png" onclick="prev()"/>
+                <img id="Sright" src="Imagenes/der.png" onclick="next()"/>
+            </div>
+            <!-- Informacion de cada imagen -->
+            <div id="SnavBottom">
+                <!-- Etiquetas de imagenes-->
+                <p id="SP0">Regla Inicial del juego</p>
+                <p id="SP1">Solicitar nueva ficha</p>
+                <p id="SP2">Comodín</p>
+                <p id="SP3">Movimientos</p>
+                <p id="SP4">Movimientos</p>
+                <p id="SP5">Movimientos</p>
+                <p id="SP6">Ganador de la Partida</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
